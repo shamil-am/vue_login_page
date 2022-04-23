@@ -6,10 +6,10 @@
           <img src="../assets/logo-light.svg" alt="logo" />
         </v-col>
         <v-col cols="12" md="5" class="form-side d-flex justify-center align-center">
-          <v-form v-model="valid">
+          <v-form v-model="valid" ref="form">
             <v-text-field v-model="login" :rules="loginRules" label="İstifadəçi adı" outlined required></v-text-field>
             <v-text-field v-model="password" :rules="passwordRules" label="Şifrə" outlined required></v-text-field>
-            <v-btn block color="#5758bb" class="white--text">Daxil ol</v-btn>
+            <v-btn block color="#5758bb" class="white--text" @click="submit">Daxil ol</v-btn>
           </v-form>
         </v-col>
       </v-row>
@@ -23,9 +23,21 @@ export default {
     valid: false,
     login: "",
     password: "",
-    loginRules: [(v) => !!v || "Name is required", (v) => v.length <= 10 || "Name must be less than 10 characters"],
-    passwordRules: [(v) => !!v || "parol is required", (v) => v.length <= 10 || "Name must be less than 10 characters"],
+    loginRules: [
+      (v) => !!v || "İstifadəçi adı boş buraxıla bilməz",
+      (v) => v.length <= 10 || "İstifadəçi adı 10 simvoldan çox ola bilməz",
+      (v) => v.length >= 5 || "İstifadəçi adı 5 simvoldan az ola bilməz",
+    ],
+    passwordRules: [(v) => !!v || "Şifrə daxil edin"],
   }),
+  methods: {
+    submit() {
+      let isValid = this.$refs.form.validate();
+      if (isValid) {
+        this.$router.push("/home");
+      }
+    },
+  },
 };
 </script>
 
@@ -45,10 +57,7 @@ export default {
 .form-side form {
   width: 75%;
 }
-/* .v-text-field--outlined >>> fieldset {
-  border-color: rgba(192, 0, 250, 0.986);
-} */
-.text-field-outlined-fieldset-border{
+.text-field-outlined-fieldset-border {
   color: teal;
 }
 
