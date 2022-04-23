@@ -33,8 +33,10 @@ export default {
   methods: {
     submit() {
       let isValid = this.$refs.form.validate();
+      console.log(this.$store.getters.getUser);
       if (isValid) {
         this.$router.push("/home");
+        this.$store.commit("handleUser", { name: this.login });
       }
     },
   },
