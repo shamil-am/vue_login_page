@@ -1,22 +1,21 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
-const state = {
-  user: {
-    name: "Shamil",
-    surname: "Mammadov",
-  },
-};
+
 export default new Vuex.Store({
-  state,
+  state: {
+    user: null,
+  },
   getters: {
-    getUser() {
-      return state.user;
+    _isAuthenticated(state) {
+      return state.user ? true : false;
     },
   },
   mutations: {
-    handleUser(state, userData) {
-      state.user = userData;
+    setUser(state, logedUser) {
+      state.user = logedUser;
     },
   },
+  plugins: [createPersistedState()],
 });

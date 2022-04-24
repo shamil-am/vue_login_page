@@ -8,7 +8,17 @@
         <v-col cols="12" md="5" class="form-side d-flex justify-center align-center">
           <v-form v-model="valid" ref="form">
             <v-text-field v-model="login" :rules="loginRules" label="İstifadəçi adı" outlined required></v-text-field>
-            <v-text-field v-model="password" :rules="passwordRules" label="Şifrə" outlined required></v-text-field>
+            <v-text-field
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="passwordRules"
+              :type="show ? 'text' : 'password'"
+              label="Şifrə"
+              class="input-group--focused"
+              @click:append="show = !show"
+              v-model="password"
+              outlined
+              required
+            ></v-text-field>
             <v-btn block color="#5758bb" class="white--text" @click="submit">Daxil ol</v-btn>
           </v-form>
         </v-col>
@@ -18,11 +28,13 @@
 </template>
 
 <script>
+import { authenticateUser } from "../db";
 export default {
   data: () => ({
     valid: false,
     login: "",
     password: "",
+    show: false,
     loginRules: [
       (v) => !!v || "İstifadəçi adı boş buraxıla bilməz",
       (v) => v.length <= 10 || "İstifadəçi adı 10 simvoldan çox ola bilməz",
@@ -33,10 +45,16 @@ export default {
   methods: {
     submit() {
       let isValid = this.$refs.form.validate();
-      console.log(this.$store.getters.getUser);
       if (isValid) {
-        this.$router.push("/home");
-        this.$store.commit("handleUser", { name: this.login });
+        authenticateUser(this.login, this.password)
+          .then((user) => {
+            // console.log(user);
+            this.$store.commit("setUser", user);
+            this.$router.push("/home");
+          })
+          .catch((err) => {
+            alert(err);
+          });
       }
     },
   },
