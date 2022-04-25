@@ -22,7 +22,7 @@
             <v-btn block color="#5758bb" class="white--text" @click="submit">Daxil ol</v-btn>
           </v-form>
         </v-col>
-        <v-alert v-show="showAlert" type="error">The username or password is incorrect</v-alert>;
+        <v-alert v-show="showAlert" type="error">İstifadəçi adı vəya şifrə səhfdir</v-alert>;
       </v-row>
     </div>
   </div>
