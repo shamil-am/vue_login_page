@@ -22,6 +22,7 @@
             <v-btn block color="#5758bb" class="white--text" @click="submit">Daxil ol</v-btn>
           </v-form>
         </v-col>
+        <v-alert v-show="showAlert" type="error">The username or password is incorrect</v-alert>;
       </v-row>
     </div>
   </div>
@@ -41,6 +42,7 @@ export default {
       (v) => v.length >= 5 || "İstifadəçi adı 5 simvoldan az ola bilməz",
     ],
     passwordRules: [(v) => !!v || "Şifrə daxil edin"],
+    showAlert: false,
   }),
   methods: {
     submit() {
@@ -48,12 +50,14 @@ export default {
       if (isValid) {
         authenticateUser(this.login, this.password)
           .then((user) => {
-            // console.log(user);
             this.$store.commit("setUser", user);
             this.$router.push("/home");
           })
-          .catch((err) => {
-            alert(err);
+          .catch(() => {
+            this.showAlert = true;
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 1500);
           });
       }
     },
@@ -105,6 +109,29 @@ export default {
 @media (min-width: 1200px) {
   .logo-side {
     height: 24rem;
+  }
+}
+</style>
+
+<style scoped>
+.v-alert {
+  position: absolute;
+  top: 60px;
+  opacity: 0.5;
+  right: -300px;
+  transition: 0.3s cubic-bezier(0, 0, 0.34, 1.21);
+  animation: show 1.5s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes show {
+  from {
+    opacity: 0.5;
+    right: -300px;
+  }
+  to {
+    opacity: 1;
+    right: 20px;
   }
 }
 </style>
