@@ -3,7 +3,7 @@
     <v-app-bar color="deep-purple accent-4" dense dark>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Page title</v-toolbar-title>
+      <v-toolbar-title>My Store</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import api from "../api/_axios";
 export default {
   data() {
     return {
@@ -61,6 +62,11 @@ export default {
       this.$store.commit("setUser", null);
       this.$router.push("/login");
     },
+  },
+  async mounted() {
+    let response = await api.get();
+    let result = await response.data;
+    console.log(result);
   },
 };
 </script>
