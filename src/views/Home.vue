@@ -2,7 +2,7 @@
 <template>
   <div class="home">
     <v-card class="ml-auto" height="400" width="256">
-      <h1>{{ $store.state.user && $store.state.user.name }}</h1>
+      <h1 style="text-align: center">{{ $store.state.user && $store.state.user.name }}</h1>
       <v-navigation-drawer class="deep-purple accent-4" dark permanent>
         <v-list>
           <v-list-item v-for="item in items" :key="item.title" link>
