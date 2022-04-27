@@ -1,10 +1,15 @@
 <template>
-  <v-app-bar color="deep-purple accent-4" dense dark fixed>
+  <v-app-bar color="deep-purple accent-4" dense dark fixed height="60">
     <router-link to="/" style="color: #fff">
       <v-toolbar-title>Vue Store</v-toolbar-title>
     </router-link>
     <v-spacer></v-spacer>
-    <v-btn icon>
+    <v-btn icon v-if="liked.length">
+      <v-badge :content="liked.length" :value="6" color="purple">
+        <v-icon>mdi-heart</v-icon>
+      </v-badge>
+    </v-btn>
+    <v-btn icon v-else>
       <v-icon>mdi-heart</v-icon>
     </v-btn>
     <v-btn icon>
@@ -40,7 +45,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -59,6 +64,11 @@ export default {
       this.setUser(null);
       this.$router.push("/login");
     },
+  },
+  computed: {
+    ...mapGetters({
+      liked: "_likedProducts",
+    }),
   },
 };
 </script>
