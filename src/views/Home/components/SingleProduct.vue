@@ -44,7 +44,7 @@ export default {
       setTimeout(() => (this.loading = false), 2000);
     },
     titleWrapper(title) {
-      return title.split("").slice(0, 18).concat("...").join("");
+      return title.split("").slice(0, 15).concat("...").join("");
     },
   },
   computed: {
