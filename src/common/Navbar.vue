@@ -1,6 +1,6 @@
 <template>
   <v-app-bar color="deep-purple accent-4" dense dark fixed height="60">
-    <router-link to="/" style="color: #fff">
+    <router-link to="/home" style="color: #fff">
       <v-toolbar-title>Vue Store</v-toolbar-title>
     </router-link>
     <v-spacer></v-spacer>

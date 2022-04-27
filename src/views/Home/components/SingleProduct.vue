@@ -16,7 +16,9 @@
         <div class="product-description">{{ product.description }}</div>
       </v-card-text>
       <v-card-actions>
-        <v-btn outlined rounded text> More </v-btn>
+        <router-link :to="`/home/${product.id}`">
+          <v-btn outlined rounded text> More </v-btn>
+        </router-link>
         <v-spacer></v-spacer>
         <v-btn icon @click="likeProduct(product)">
           <v-icon :color="alreadyLiked">mdi-heart</v-icon>

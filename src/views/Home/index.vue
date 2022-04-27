@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <Navbar />
-      <Loader v-if="!productsLoaded" />
-      <Products v-else :products="products" />
+    <Loader v-if="!productsLoaded" />
+    <Products v-else :products="products" />
   </div>
 </template>
 
