@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { authenticateUser } from "../db";
+import { authenticateUser } from "../../db";
 import { mapMutations } from "vuex";
 export default {
   data: () => ({

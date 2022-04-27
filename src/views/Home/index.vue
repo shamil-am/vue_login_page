@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import SingleProducts from "../components/SingleProduct.vue";
-import Navbar from "../components/common/Navbar.vue";
-import Loader from "../components/common/Loader.vue";
-import Products from "../api/products.service";
+import SingleProducts from "./components/SingleProduct.vue";
+import Navbar from "../../common/Navbar.vue";
+import Loader from "../../common/Loader.vue";
+import Products from "../../api/products.service";
 export default {
   components: {
     SingleProducts,

@@ -6,8 +6,8 @@ import store from "./app/store";
 const router = new VueRouter({
   routes: [
     { path: "/", redirect: { name: "LoginPage" } },
-    { name: "HomePage", path: "/home", component: () => import("./views/Home.vue") },
-    { name: "LoginPage", path: "/login", component: () => import("./views/Login.vue") },
+    { name: "HomePage", path: "/home", component: () => import("./views/Home/index.vue") },
+    { name: "LoginPage", path: "/login", component: () => import("./views/Login/index.vue") },
   ],
 });
 router.beforeEach((to, from, next) => {
