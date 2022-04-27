@@ -14,7 +14,7 @@
 
         <v-card-text>
           <div class="my-4 text-subtitle-1">{{ product.category }}</div>
-          <div class="productDescription">{{ product.description }}</div>
+          <div class="product-description">{{ product.description }}</div>
         </v-card-text>
       </v-card>
     </router-link>
@@ -26,9 +26,6 @@ export default {
   data: () => ({
     loading: false,
     selection: 1,
-    cardImage: {
-      color: "red",
-    },
   }),
 
   methods: {
@@ -45,11 +42,11 @@ export default {
 </script>
 
 <style scoped>
-.productDescription {
+.product-description {
   height: 5rem;
   overflow-y: scroll;
 }
-.productDescription::-webkit-scrollbar {
+.product-description::-webkit-scrollbar {
   display: none;
 }
 </style>

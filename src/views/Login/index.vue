@@ -19,7 +19,7 @@
               outlined
               required
             ></v-text-field>
-            <v-btn block color="#6200ea" class="white--text" @click="submit">Daxil ol</v-btn>
+            <v-btn block color="#6200ea" class="white--text" @click="submit" type="submit" :disabled="loginInProgress">Daxil ol</v-btn>
           </v-form>
         </v-col>
         <v-alert v-show="showAlert" type="error">İstifadəçi adı vəya şifrə səhfdir</v-alert>;
@@ -44,6 +44,7 @@ export default {
     ],
     passwordRules: [(v) => !!v || "Şifrə daxil edin"],
     showAlert: false,
+    buttonIsDisabled: false,
   }),
   methods: {
     ...mapMutations({
@@ -52,6 +53,7 @@ export default {
     submit() {
       let isValid = this.$refs.form.validate();
       if (isValid) {
+        this.buttonIsDisabled = true;
         authenticateUser(this.login, this.password)
           .then((user) => {
             this.setUser("setUser", user);
@@ -59,11 +61,18 @@ export default {
           })
           .catch(() => {
             this.showAlert = true;
+            this.buttonIsDisabled = false;
+
             setTimeout(() => {
               this.showAlert = false;
             }, 1500);
           });
       }
+    },
+  },
+  computed: {
+    loginInProgress() {
+      return this.buttonIsDisabled;
     },
   },
 };
