@@ -3,7 +3,7 @@
     <Navbar />
     <v-container class="pt-15">
       <v-row>
-        <Loader v-if="!productsLoaded"/>
+        <Loader v-if="!productsLoaded" />
         <SingleProducts v-else v-for="product in products" :key="product.id" :product="product" />
       </v-row>
     </v-container>
@@ -13,13 +13,13 @@
 <script>
 import SingleProducts from "../components/SingleProduct.vue";
 import Navbar from "../components/common/Navbar.vue";
-import api from "../api/_axios";
-import Loader from '../components/common/Loader.vue'
+import Loader from "../components/common/Loader.vue";
+import Products from "../api/products.service";
 export default {
   components: {
     SingleProducts,
     Navbar,
-    Loader
+    Loader,
   },
   data() {
     return {
@@ -27,15 +27,11 @@ export default {
       productsLoaded: false,
     };
   },
-  mounted() {
-    this.getProducts();
-  },
-  methods: {
-    async getProducts() {
-      let response = await api.get();
-      this.products = response.data;
-      this.productsLoaded = true;
-    },
+  methods: {},
+  async mounted() {
+    let { data } = await Products.getProducts();
+    this.products = data;
+    this.productsLoaded = true;
   },
 };
 </script>

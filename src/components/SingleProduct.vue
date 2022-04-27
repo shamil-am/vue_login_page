@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" sm="6" md="4" lg="3">
     <router-link to="/products/2">
-      <v-card :loading="loading" class="mx-auto my-4" max-width="100%" v-ripple pointer>
+      <v-card :loading="loading" class="mx-auto my-4 pa-4" max-width="100%" v-ripple pointer>
         <v-img height="200" :src="product.image" contain></v-img>
 
         <v-card-title>{{ titleWrapper(product.title) }}</v-card-title>
