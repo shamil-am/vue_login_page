@@ -1,72 +1,42 @@
 <template>
   <div class="home">
-    <v-app-bar color="deep-purple accent-4" dense dark>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-      <v-toolbar-title>My Store</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-menu left bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item v-for="item in items" :key="item.title" link>
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item link @click="logOut">
-            <v-list-item-icon>
-              <v-icon>{{ "mdi-logout-variant" }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ "Logout" }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-app-bar>
+    <Navbar />
+    <v-container class="pt-15">
+      <v-row>
+        <Loader v-if="!productsLoaded"/>
+        <SingleProducts v-else v-for="product in products" :key="product.id" :product="product" />
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
+import SingleProducts from "../components/SingleProduct.vue";
+import Navbar from "../components/common/Navbar.vue";
 import api from "../api/_axios";
+import Loader from '../components/common/Loader.vue'
 export default {
+  components: {
+    SingleProducts,
+    Navbar,
+    Loader
+  },
   data() {
     return {
-      items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard" },
-        { title: "Account", icon: "mdi-account-box" },
-        { title: "Admin", icon: "mdi-gavel" },
-      ],
+      products: [],
+      productsLoaded: false,
     };
   },
-  methods: {
-    logOut() {
-      this.$store.commit("setUser", null);
-      this.$router.push("/login");
-    },
+  mounted() {
+    this.getProducts();
   },
-  async mounted() {
-    let response = await api.get();
-    let result = await response.data;
-    console.log(result);
+  methods: {
+    async getProducts() {
+      let response = await api.get();
+      this.products = response.data;
+      this.productsLoaded = true;
+    },
   },
 };
 </script>
+

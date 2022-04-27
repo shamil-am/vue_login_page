@@ -3,7 +3,7 @@
     <div class="container">
       <v-row>
         <v-col cols="12" md="5" offset-md="1" class="logo-side d-flex justify-center align-center">
-          <img src="../assets/logo-light.svg" alt="logo" />
+          <h1 style="color: #fff">Vue Store</h1>
         </v-col>
         <v-col cols="12" md="5" class="form-side d-flex justify-center align-center">
           <v-form v-model="valid" ref="form">
@@ -19,7 +19,7 @@
               outlined
               required
             ></v-text-field>
-            <v-btn block color="#5758bb" class="white--text" @click="submit">Daxil ol</v-btn>
+            <v-btn block color="#6200ea" class="white--text" @click="submit">Daxil ol</v-btn>
           </v-form>
         </v-col>
         <v-alert v-show="showAlert" type="error">İstifadəçi adı vəya şifrə səhfdir</v-alert>;
@@ -30,6 +30,7 @@
 
 <script>
 import { authenticateUser } from "../db";
+import { mapMutations } from "vuex";
 export default {
   data: () => ({
     valid: false,
@@ -45,12 +46,15 @@ export default {
     showAlert: false,
   }),
   methods: {
+    ...mapMutations({
+      setUser: "setUser",
+    }),
     submit() {
       let isValid = this.$refs.form.validate();
       if (isValid) {
         authenticateUser(this.login, this.password)
           .then((user) => {
-            this.$store.commit("setUser", user);
+            this.setUser("setUser", user);
             this.$router.push("/home");
           })
           .catch(() => {
@@ -71,7 +75,7 @@ export default {
   background-color: gray;
 }
 .logo-side {
-  background-color: #5758bb;
+  background-color: #6200ea;
   height: 12rem;
 }
 
