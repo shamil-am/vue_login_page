@@ -12,9 +12,13 @@
     <v-btn icon v-else>
       <v-icon>mdi-heart</v-icon>
     </v-btn>
-    <v-btn icon>
+    <div class="mx-2">
+      <v-text-field type="text" v-model="product"></v-text-field>
+    </div>
+    <v-btn icon @click="searchHandler">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
+
     <v-menu left bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
@@ -54,15 +58,20 @@ export default {
         { title: "Account", icon: "mdi-account-box" },
         { title: "Admin", icon: "mdi-gavel" },
       ],
+      product: "",
     };
   },
   methods: {
     ...mapMutations({
       setUser: "setUser",
+      searchProduct: "searchProduct",
     }),
     logOut() {
       this.setUser(null);
       this.$router.push("/login");
+    },
+    searchHandler() {
+      this.searchProduct(this.product);
     },
   },
   computed: {

@@ -63,7 +63,6 @@ export default {
     let { data } = await ProductService.getProduct(this.$route.params.id);
     this.product = data;
     this.productLoaded = true;
-    console.log(data);
   },
 };
 </script>

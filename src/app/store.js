@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     likedProducts: [],
+    searchedProduct: "",
   },
   getters: {
     _isAuthenticated(state) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     _likedProducts(state) {
       return state.likedProducts;
+    },
+    _searchedProduct(state) {
+      return state.searchedProduct;
     },
   },
   mutations: {
@@ -23,6 +27,9 @@ export default new Vuex.Store({
     likeProduct(state, product) {
       let alreadyLiked = state.likedProducts.find((item) => item.id === product.id);
       state.likedProducts = alreadyLiked ? state.likedProducts.filter((item) => item.id !== product.id) : [...state.likedProducts, product];
+    },
+    searchProduct(state, productName) {
+      state.searchedProduct = productName;
     },
   },
   plugins: [createPersistedState()],

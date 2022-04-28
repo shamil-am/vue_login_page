@@ -6,8 +6,8 @@
       <v-card-title>{{ titleWrapper(product.title) }}</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
-          <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
-          <div class="grey--text ms-4">4.5 (413)</div>
+          <v-rating :value="product.rating.rate" color="amber" dense half-increments readonly size="14"></v-rating>
+          <div class="grey--text ms-4">{{ product.rating.rate }} / {{ product.rating.count }}</div>
         </v-row>
       </v-card-text>
 
