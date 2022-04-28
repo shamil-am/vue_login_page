@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pt-15">
+  <v-container pt-16>
     <v-row>
       <SingleProducts v-for="product in productsOnPage" :key="product.id" :product="product" />
     </v-row>
