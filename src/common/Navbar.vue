@@ -13,7 +13,7 @@
       <v-icon>mdi-heart</v-icon>
     </v-btn>
     <div class="mx-2">
-      <v-text-field type="text" v-model="product"></v-text-field>
+      <v-text-field type="text" v-model="product" @keyup.enter="searchHandler" placeholder="Search"></v-text-field>
     </div>
     <v-btn icon @click="searchHandler">
       <v-icon>mdi-magnify</v-icon>

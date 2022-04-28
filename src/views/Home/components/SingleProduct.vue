@@ -17,7 +17,7 @@
       </v-card-text>
       <v-card-actions>
         <router-link :to="`/home/${product.id}`">
-          <v-btn outlined rounded text> More </v-btn>
+          <v-btn outlined rounded  color="deep-purple"> More </v-btn>
         </router-link>
         <v-spacer></v-spacer>
         <v-btn icon @click="likeProduct(product)">
