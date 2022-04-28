@@ -27,7 +27,8 @@ export default {
   },
   computed: {
     pageCount() {
-      return this.products.length / this.productCount;
+      let count = Math.ceil(this.products.length / this.productCount);
+      return count > 1 ? count : 1;
     },
     productsOnPage() {
       return this.products.slice((this.page - 1) * this.productCount, this.page * this.productCount);
