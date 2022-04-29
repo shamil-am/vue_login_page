@@ -16,6 +16,7 @@ const routes = [
       { name: "ProductPage", path: "products/:id", component: () => import("./views/Product") },
     ],
   },
+  { name: "LikedPage", path: "/liked", component: () => import("./views/Liked") },
   { name: "NotFound", path: "*", component: () => import("./common/NotFound.vue") },
 ];
 
@@ -24,7 +25,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authRequired = ["MainPage", "HomePage", "ProductsPage", "ProductPage"];
+  const authRequired = ["MainPage", "HomePage", "ProductsPage", "ProductPage", "LikedPage"];
   if (authRequired.indexOf(to.name) > -1) {
     if (store.getters["userModule/_isAuthenticated"]) next();
     else next({ name: "LoginPage" });

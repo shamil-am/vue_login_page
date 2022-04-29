@@ -12,5 +12,8 @@ export const productModule = {
     searchProduct(state, productName) {
       state.searchedProduct = productName;
     },
+    removeProduct(state, productID) {
+      state.likedProducts = state.likedProducts.filter((product) => product.id !== productID);
+    },
   },
 };
