@@ -7,7 +7,9 @@ export const authenticateUser = (login, password) => {
         });
       }, 2000);
     } else {
-      reject("Cant find user");
+      setTimeout(() => {
+        reject("Cant find user");
+      }, 1000);
     }
   });
 };
