@@ -15,7 +15,7 @@
     <v-btn icon v-else>
       <v-icon>mdi-heart</v-icon>
     </v-btn>
-    <div class="mx-2 d-flex justify-between align-center" v-if="$route.name === 'ProductsPage'">
+    <div class="mx-4 d-flex justify-between align-center" v-if="$route.name === 'ProductsPage'">
       <v-text-field type="text" v-model="product" @keyup.enter="searchHandler" placeholder="Search"></v-text-field>
       <v-btn icon @click="searchHandler">
         <v-icon>mdi-magnify</v-icon>
@@ -61,20 +61,20 @@ export default {
         { title: "Account", icon: "mdi-account-box" },
         { title: "Admin", icon: "mdi-gavel" },
       ],
-      product: "",
+      product: this.$store.state.productModule.searchedProduct,
     };
   },
   methods: {
     ...mapMutations({
       setUser: "userModule/setUser",
-      searchProduct: "productsModule/searchProduct",
+      searchProduct: "productModule/searchProduct",
     }),
+    searchHandler() {
+      this.searchProduct(this.product);
+    },
     logOut() {
       this.setUser(null);
       this.$router.push("/login");
-    },
-    searchHandler() {
-      this.searchProduct(this.product);
     },
   },
 };
