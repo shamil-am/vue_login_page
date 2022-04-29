@@ -35,27 +35,18 @@ export default {
   data: () => ({
     selection: 1,
   }),
-
   methods: {
-    ...mapMutations(["likeProduct"]),
+    ...mapMutations({
+      likeProduct: "productModule/likeProduct",
+    }),
     titleWrapper(title) {
       return title.split("").slice(0, 15).concat("...").join("");
     },
   },
   computed: {
     alreadyLiked() {
-      return this.$store.state.likedProducts.find((el) => el.id === this.product.id) ? "red" : "black";
+      return this.$store.state.productModule.likedProducts.find((el) => el.id === this.product.id) ? "red" : "gray";
     },
   },
 };
 </script>
-
-<style scoped>
-.product-description {
-  height: 5rem;
-  overflow-y: scroll;
-}
-.product-description::-webkit-scrollbar {
-  display: none;
-}
-</style>

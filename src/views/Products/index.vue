@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import './index.scss'
 import ProductService from "../../api/products.service";
 import SingleProducts from "./components/SingleProduct.vue";
 

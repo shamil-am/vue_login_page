@@ -4,8 +4,8 @@
       <v-toolbar-title>Vue Store</v-toolbar-title>
     </router-link>
     <v-spacer></v-spacer>
-    <v-btn icon v-if="$store.state.likedProducts.length">
-      <v-badge :content="$store.state.likedProducts.length" :value="6" color="purple">
+    <v-btn icon v-if="$store.state.productModule.likedProducts.length">
+      <v-badge :content="$store.state.productModule.likedProducts.length" :value="6" color="purple">
         <v-icon>mdi-heart</v-icon>
       </v-badge>
     </v-btn>
@@ -62,7 +62,10 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setUser", "searchProduct"]),
+    ...mapMutations({
+      setUser: "userModule/setUser",
+      searchProduct: "productsModule/searchProduct",
+    }),
     logOut() {
       this.setUser(null);
       this.$router.push("/login");

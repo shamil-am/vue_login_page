@@ -1,0 +1,7 @@
+.product-description {
+  height: 5rem;
+  overflow-y: scroll;
+}
+.product-description::-webkit-scrollbar {
+  display: none;
+}

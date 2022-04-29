@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import "./login.scss";
+import "./index.scss";
 import { authenticateUser } from "../../db";
 import { mapMutations } from "vuex";
 export default {
@@ -48,14 +48,16 @@ export default {
     buttonIsDisabled: false,
   }),
   methods: {
-    ...mapMutations(["setUser"]),
+    ...mapMutations({
+      setUser: "userModule/setUser",
+    }),
     submit() {
       let isValid = this.$refs.form.validate();
       if (isValid) {
         this.buttonIsDisabled = true;
         authenticateUser(this.login, this.password)
           .then((user) => {
-            this.setUser(user);
+            this.setUser(user)
             this.$router.push("/");
           })
           .catch(() => {

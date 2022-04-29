@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
-import store from "./app/store";
+import store from "./store";
 
 const router = new VueRouter({
   routes: [
@@ -23,15 +23,15 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const authRequired = ["HomePage", "ProductsPage", "ProductPage"];
   if (authRequired.indexOf(to.name) > -1) {
-    if (store.getters._isAuthenticated) next();
+    if (store.getters['userModule/_isAuthenticated']) next();
     else next({ name: "LoginPage" });
-  } else if (to.name === "LoginPage" && store.getters._isAuthenticated) {
+  } else if (to.name === "LoginPage" && store.getters['userModule/_isAuthenticated']) {
     next(false);
   } else {
     next();
   }
   // link pasted to another tab as rootpath
-  if (to.name === "LoginPage" && from.name === null && store.getters._isAuthenticated) {
+  if (to.name === "LoginPage" && from.name === null && store.getters['userModule/_isAuthenticated']) {
     next({ name: "HomePage" });
   }
 });
