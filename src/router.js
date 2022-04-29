@@ -5,14 +5,23 @@ import store from "./app/store";
 
 const router = new VueRouter({
   routes: [
-    { path: "/", redirect: { name: "LoginPage" } },
+    // { path: "/", redirect: { name: "LoginPage" } },
     { name: "LoginPage", path: "/login", component: () => import("./views/Login") },
-    { name: "HomePage", path: "/home", component: () => import("./views/Home") },
-    { name: "ProductPage", path: "/home/:id", component: () => import("./views/Product") },
+    {
+      name: "HomePage",
+      path: "/",
+      component: () => import("./views/Home"),
+      children: [
+        { name: "ProductsPage", path: "products", component: () => import("./views/Products") },
+        { name: "ProductPage", path: "products/:id", component: () => import("./views/Product") },
+      ],
+    },
+    { name: "NotFound", path: "*", component: () => import("./common/NotFound.vue") },
+
   ],
 });
 router.beforeEach((to, from, next) => {
-  const authRequired = ["HomePage", "ProductPage"];
+  const authRequired = ["HomePage", "ProductsPage", "ProductPage"];
   if (authRequired.indexOf(to.name) > -1) {
     if (store.getters._isAuthenticated) next();
     else next({ name: "LoginPage" });

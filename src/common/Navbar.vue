@@ -1,23 +1,23 @@
 <template>
   <v-app-bar color="deep-purple accent-4" dense dark fixed height="60">
-    <router-link to="/home" style="color: #fff">
+    <router-link to="/" style="color: #fff">
       <v-toolbar-title>Vue Store</v-toolbar-title>
     </router-link>
     <v-spacer></v-spacer>
-    <v-btn icon v-if="liked.length">
-      <v-badge :content="liked.length" :value="6" color="purple">
+    <v-btn icon v-if="$store.state.likedProducts.length">
+      <v-badge :content="$store.state.likedProducts.length" :value="6" color="purple">
         <v-icon>mdi-heart</v-icon>
       </v-badge>
     </v-btn>
     <v-btn icon v-else>
       <v-icon>mdi-heart</v-icon>
     </v-btn>
-    <div class="mx-2">
+    <div class="mx-2 d-flex justify-between align-center" v-if="$route.name === 'ProductsPage'">
       <v-text-field type="text" v-model="product" @keyup.enter="searchHandler" placeholder="Search"></v-text-field>
+      <v-btn icon @click="searchHandler">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
     </div>
-    <v-btn icon @click="searchHandler">
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
 
     <v-menu left bottom>
       <template v-slot:activator="{ on, attrs }">
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -62,10 +62,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
-      setUser: "setUser",
-      searchProduct: "searchProduct",
-    }),
+    ...mapMutations(["setUser", "searchProduct"]),
     logOut() {
       this.setUser(null);
       this.$router.push("/login");
@@ -73,11 +70,6 @@ export default {
     searchHandler() {
       this.searchProduct(this.product);
     },
-  },
-  computed: {
-    ...mapGetters({
-      liked: "_likedProducts",
-    }),
   },
 };
 </script>

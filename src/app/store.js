@@ -13,9 +13,6 @@ export default new Vuex.Store({
     _isAuthenticated(state) {
       return state.user ? true : false;
     },
-    _likedProducts(state) {
-      return state.likedProducts;
-    },
     _searchedProduct(state) {
       return state.searchedProduct;
     },

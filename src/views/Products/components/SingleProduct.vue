@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12" sm="6" md="4" lg="3">
-    <v-card :loading="loading" class="mx-auto my-4 pa-4" max-width="100%">
+    <v-card class="mx-auto my-4 pa-4" max-width="100%">
       <v-img height="200" :src="product.image" contain></v-img>
 
       <v-card-title>{{ titleWrapper(product.title) }}</v-card-title>
@@ -16,8 +16,8 @@
         <div class="product-description">{{ product.description }}</div>
       </v-card-text>
       <v-card-actions>
-        <router-link :to="`/home/${product.id}`">
-          <v-btn outlined rounded  color="deep-purple"> More </v-btn>
+        <router-link :to="`/products/${product.id}`">
+          <v-btn outlined rounded color="deep-purple"> More </v-btn>
         </router-link>
         <v-spacer></v-spacer>
         <v-btn icon @click="likeProduct(product)">
@@ -29,32 +29,22 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 export default {
   props: ["product"],
   data: () => ({
-    loading: false,
     selection: 1,
   }),
 
   methods: {
-    ...mapMutations({
-      likeProduct: "likeProduct",
-    }),
-    reserve() {
-      this.loading = true;
-      setTimeout(() => (this.loading = false), 2000);
-    },
+    ...mapMutations(["likeProduct"]),
     titleWrapper(title) {
       return title.split("").slice(0, 15).concat("...").join("");
     },
   },
   computed: {
-    ...mapGetters({
-      liked: "_likedProducts",
-    }),
     alreadyLiked() {
-      return this.liked.find((el) => el.id === this.product.id) ? "red" : "black";
+      return this.$store.state.likedProducts.find((el) => el.id === this.product.id) ? "red" : "black";
     },
   },
 };

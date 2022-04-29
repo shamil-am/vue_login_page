@@ -56,7 +56,7 @@ export default {
         authenticateUser(this.login, this.password)
           .then((user) => {
             this.setUser(user);
-            this.$router.push("/home");
+            this.$router.push("/");
           })
           .catch(() => {
             this.showAlert = true;
