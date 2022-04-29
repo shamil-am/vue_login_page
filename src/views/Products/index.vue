@@ -1,6 +1,5 @@
 <template>
   <v-container pt-16>
-    <h1>Products</h1>
     <v-row>
       <SingleProducts v-for="product in products" :key="product.id" :product="product" />
     </v-row>

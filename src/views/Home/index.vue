@@ -1,53 +1,21 @@
 <template>
-  <div class="home">
-    <Navbar />
-    <h1 class="mt-16">Home page</h1>
-    <router-view></router-view>
-    <!-- <Loader v-if="!productsLoaded" /> -->
-  </div>
+  <v-carousel cycle height="400" hide-delimiter-background show-arrows-on-hover class="pt-16">
+    <v-carousel-item v-for="(slide, i) in slides" :key="i">
+      <v-sheet :color="colors[i]" height="100%">
+        <v-row class="fill-height" align="center" justify="center">
+          <div class="text-h2">{{ slide }} Slide</div>
+        </v-row>
+      </v-sheet>
+    </v-carousel-item>
+  </v-carousel>
 </template>
-
 <script>
-import Navbar from "../../common/Navbar.vue";
-// import Products from "../Products";
-// import Loader from "../../common/Loader.vue";
-// import ProductService from "../../api/products.service";
-// import Products from "./components/Products.vue";
-// import { mapGetters } from "vuex";
 export default {
-  components: {
-    Navbar,
-    // Products,
-    // Loader,
-    // Products,
-  },
   data() {
     return {
-      // allProducts: [],
-      // products: [],
-      // productsLoaded: false,
+      colors: ["indigo", "warning", "pink darken-2", "red lighten-1", "deep-purple accent-4"],
+      slides: ["First", "Second", "Third", "Fourth", "Fifth"],
     };
-  },
-  methods: {},
-  computed: {
-    // ...mapGetters({
-    //   _searchedProduct: "_searchedProduct",
-    // }),
-  },
-  watch: {
-    // _searchedProduct(newV) {
-    //   this.products = this.allProducts.filter((product) => {
-    //     return product.title.toUpperCase().includes(newV.toUpperCase());
-    //   });
-    // },
-  },
-  async mounted() {
-    // let { data } = await ProductService.getProducts();
-    // this.products = data;
-    // set to all for future filtering process
-    // this.allProducts = data;
-    // this.productsLoaded = true;
   },
 };
 </script>
-

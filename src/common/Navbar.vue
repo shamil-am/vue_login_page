@@ -4,6 +4,9 @@
       <v-toolbar-title>Vue Store</v-toolbar-title>
     </router-link>
     <v-spacer></v-spacer>
+    <router-link to="/products" style="color: #fff">
+      <v-toolbar-title>Products</v-toolbar-title>
+    </router-link>
     <v-btn icon v-if="$store.state.productModule.likedProducts.length">
       <v-badge :content="$store.state.productModule.likedProducts.length" :value="6" color="purple">
         <v-icon>mdi-heart</v-icon>
