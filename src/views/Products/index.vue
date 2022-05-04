@@ -15,6 +15,7 @@
 import "./index.scss";
 import ProductService from "../../api/products.service";
 import SingleProducts from "./components/SingleProduct.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -23,28 +24,38 @@ export default {
   data() {
     return {
       allProducts: [],
+      filteredProducts: [],
       page: 1,
-      productToShow: 10,
+      productToShow: 4,
     };
   },
   methods: {
     async getProducts() {
       let { data } = await ProductService.getProducts();
       this.allProducts = data;
+      this.filterProducts();
+    },
+    filterProducts() {
+      let searched = this.$store.state.productModule.searchedProduct;
+      this.filteredProducts = searched ? this.allProducts.filter((product) => product.title.toUpperCase().includes(searched.toUpperCase())) : this.allProducts;
+      this.page = 1;
     },
   },
   computed: {
-    filteredProducts() {
-      let searched = this.$store.state.productModule.searchedProduct;
-
-      return searched ? this.allProducts.filter((product) => product.title.toUpperCase().includes(searched.toUpperCase())) : this.allProducts;
-    },
+    ...mapGetters({
+      searchedProduct: "productModule/_searchedProduct",
+    }),
     productsOnPage() {
-      return this.filteredProducts.length >= 10 ? this.filteredProducts.slice((this.page - 1) * this.productToShow, this.page * this.productToShow) : this.filteredProducts;
+      return this.filteredProducts.slice((this.page - 1) * this.productToShow, this.page * this.productToShow);
     },
     pageCount() {
       let count = Math.ceil(this.filteredProducts.length / this.productToShow);
       return count > 1 ? count : 1;
+    },
+  },
+  watch: {
+    searchedProduct() {
+      this.filterProducts()
     },
   },
   mounted() {

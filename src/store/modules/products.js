@@ -4,6 +4,11 @@ export const productModule = {
     likedProducts: [],
     searchedProduct: "",
   },
+  getters: {
+    _searchedProduct(state) {
+      return state.searchedProduct;
+    },
+  },
   mutations: {
     likeProduct(state, product) {
       let alreadyLiked = state.likedProducts.find((item) => item.id === product.id);
