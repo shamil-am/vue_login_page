@@ -36,12 +36,11 @@ export default {
   computed: {
     filteredProducts() {
       let searched = this.$store.state.productModule.searchedProduct;
-      return searched 
-      ? this.allProducts.filter((product) => product.title.toUpperCase().includes(searched.toUpperCase())) 
-      : this.allProducts;
+
+      return searched ? this.allProducts.filter((product) => product.title.toUpperCase().includes(searched.toUpperCase())) : this.allProducts;
     },
     productsOnPage() {
-      return this.filteredProducts.slice((this.page - 1) * this.productToShow, this.page * this.productToShow);
+      return this.filteredProducts.length >= 10 ? this.filteredProducts.slice((this.page - 1) * this.productToShow, this.page * this.productToShow) : this.filteredProducts;
     },
     pageCount() {
       let count = Math.ceil(this.filteredProducts.length / this.productToShow);
