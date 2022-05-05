@@ -10,13 +10,14 @@ const routes = [
     path: "/",
     redirect: { name: "HomePage" },
     component: () => import("./views"),
+    meta: { requiresAuth: true },
     children: [
-      { name: "HomePage", path: "", component: () => import("./views/Home") },
-      { name: "ProductsPage", path: "products", component: () => import("./views/Products") },
-      { name: "ProductPage", path: "products/:id", component: () => import("./views/Product") },
+      { name: "HomePage", path: "", component: () => import("./views/Home"), meta: { requiresAuth: true } },
+      { name: "ProductsPage", path: "products", component: () => import("./views/Products"), meta: { requiresAuth: true } },
+      { name: "ProductPage", path: "products/:id", component: () => import("./views/Product"), meta: { requiresAuth: true } },
     ],
   },
-  { name: "LikedPage", path: "/liked", component: () => import("./views/Liked") },
+  { name: "LikedPage", path: "/liked", component: () => import("./views/Liked"), meta: { requiresAuth: true } },
   { name: "NotFound", path: "*", component: () => import("./common/NotFound.vue") },
 ];
 
@@ -25,19 +26,20 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authRequired = ["MainPage", "HomePage", "ProductsPage", "ProductPage", "LikedPage"];
-  if (authRequired.indexOf(to.name) > -1) {
-    if (store.getters["userModule/_isAuthenticated"]) next();
-    else next({ name: "LoginPage" });
-  } else if (to.name === "LoginPage" && store.getters["userModule/_isAuthenticated"]) {
-    next(false);
-  } else {
-    next();
+  let isAuthenticated = store.getters["userModule/_isAuthenticated"];
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    return next({ name: "LoginPage" });
   }
-  // link pasted to another tab as rootpath
-  if (to.name === "LoginPage" && from.name === null && store.getters["userModule/_isAuthenticated"]) {
-    next({ name: "HomePage" });
+  if (to.name === "LoginPage" && isAuthenticated && from.name !== null) {
+    return next(false);
   }
+  // if link pasted to another tab
+  if (to.name === "LoginPage" && isAuthenticated && from.name === null) {
+    return next({ name: "HomePage" });
+  }
+  next();
 });
+
 
 export default router;
